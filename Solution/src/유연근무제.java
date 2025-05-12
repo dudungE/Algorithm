@@ -1,39 +1,33 @@
-class Solution {
-    public int solution(int[] schedules, int[][] timelogs, int startday) {
-        int answer = 0;
+import java.util.Arrays;
 
-        Loop:
-        for (int i = 0; i < timelogs.length; i++) {
-            int day = startday;
-            for (int j = 0; j < 7; j++) {
-                if (day != 6 && day != 7) {
-                    if (toMinute(timelogs[i][j]) > toMinute(schedules[i]) + 10) {continue Loop;}
-                } // end if
-                day = day % 7 + 1;
-            } //end j
-            answer++;
-        } // end i
+public class Solution {
+    public int solution(int[] mats, String[][] park) {
+        int n = park.length;
+        int m = park[0].length;
 
-        return answer;
+        // 돗자리 크기 내림차순 정렬
+        Arrays.sort(mats);
+        for (int idx = mats.length - 1; idx >= 0; idx--) {
+            int size = mats[idx];
+            // 모든 시작점 탐색
+            for (int i = 0; i <= n - size; i++) {
+                for (int j = 0; j <= m - size; j++) {
+                    if (canPlace(i, j, size, park)) {
+                        return size;
+                    }
+                }
+            }
+        }
+        return -1; // 어떤 돗자리도 못 깔면 -1
     }
 
-    public static int toMinute(int time) {
-        return time / 100 * 60 + time % 100;
+    // (r, c)에서 size x size 돗자리 깔 수 있는지 확인
+    private boolean canPlace(int r, int c, int size, String[][] park) {
+        for (int i = r; i < r + size; i++) {
+            for (int j = c; j < c + size; j++) {
+                if (!park[i][j].equals("-1")) return false;
+            }
+        }
+        return true;
     }
-
-    public static void main(String[] args) {
-        Solution sol = new Solution();
-
-        int[] schedules = {730, 855, 700, 720};
-        int[][] timelogs = {{710, 700, 650, 735, 700, 931, 912},
-                {908, 901, 805, 815, 800, 831, 835},
-                {705, 701, 702, 705, 710, 710, 711},
-                {707, 731, 859, 913, 934, 931, 905}};
-        int startday = 1;
-
-
-        sol.solution(schedules, timelogs, startday);
-    }
-
-
 }
