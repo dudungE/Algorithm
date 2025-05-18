@@ -19,6 +19,7 @@ class Solution {
             for (String reportedUser : reportedSet) {
                 reportedCount.put(reportedUser, reportedCount.getOrDefault(reportedUser, 0) + 1);
             }
+        }
         
         int[] answer = new int[id_list.length];
         for (int i = 0; i < id_list.length; i++) {
