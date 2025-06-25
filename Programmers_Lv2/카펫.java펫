@@ -1,0 +1,19 @@
+class Solution {
+    public int[] solution(int brown, int yellow) {
+        for (int height = 1; height <= yellow; height++) {
+            if (yellow % height == 0) {
+                int width = yellow / height;
+                if (width >= height) {
+                
+                    int totalWidth = width + 2;
+                    int totalHeight = height + 2;
+                   
+                    if ((totalWidth * totalHeight - yellow) == brown) {
+                        return new int[]{totalWidth, totalHeight};
+                    }
+                }
+            }
+        }
+        return null;
+    }
+}
